@@ -14,11 +14,13 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .add(MAIN_FRAGMENT_CONTAINER, HomeFragment())
+        if(savedInstanceState == null){
+            supportFragmentManager
+                .beginTransaction()
+                .replace(MAIN_FRAGMENT_CONTAINER, HomeFragment.newInstance())
                 .commit()
         }
+
 
     }
 

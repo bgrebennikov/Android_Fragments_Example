@@ -1,51 +1,29 @@
 package com.edricaazaza.learningfragments.ui.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import android.widget.Toast
 import com.edricaazaza.learningfragments.MainActivity.Companion.MAIN_FRAGMENT_CONTAINER
-import com.edricaazaza.learningfragments.R
 import com.edricaazaza.learningfragments.databinding.FragmentHomeBinding
+import com.edricaazaza.learningfragments.ui.fragments.base.BaseFragment
+import com.edricaazaza.learningfragments.ui.fragments.base.viewBinding
 
-class HomeFragment : Fragment() {
+class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
 
-    private var _binding: FragmentHomeBinding? = null
-    private val binding get() = _binding!!
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.articleItem.setOnClickListener {
-            if (savedInstanceState == null) {
-                parentFragmentManager.beginTransaction()
-                    .replace(
-                        MAIN_FRAGMENT_CONTAINER,
-                        ArticleFragment.newInstance(getString(R.string.app_name), getString(R.string.default_body))
-                    )
-                    .addToBackStack(this::class.java.simpleName.toString())
-                    .commit()
-            }
+        binding.button.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(MAIN_FRAGMENT_CONTAINER, SecondFragment.newInstance())
+                .addToBackStack(this::class.simpleName)
+                .commit()
         }
+
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    companion object {
+        fun newInstance() = HomeFragment()
     }
-
 }
